@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 function Profile({ profileName, profileEmail }) {
   return (
-    <div className="profile">
+    <main className="profile">
       <div>
         <h2 className="profile__title">{`Привет, ${profileName}!`}</h2>
         <form className="profile__form">
@@ -39,7 +39,7 @@ function Profile({ profileName, profileEmail }) {
           Выйти из аккаунта
         </Link>
       </div>
-    </div>
+    </main>
   );
 }
 

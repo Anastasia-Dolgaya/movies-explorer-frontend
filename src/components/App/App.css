@@ -8,3 +8,15 @@
   font-family: 'Inter', Arial, sans-serif;
   font-style: normal;
 }
+
+@media screen and (max-width: 570px) {
+  .app {
+    padding: 0 40px 0;
+  }
+}
+
+@media screen and (max-width: 470px) {
+  .app {
+    padding: 0;
+  }
+}

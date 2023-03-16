@@ -18,13 +18,15 @@ function Input({
   inputClass,
 }) {
   return (
-    <label className="form__field">
+    <label className="form-field">
       {label}
-      <div className={`form__input-container ${containerClass}`}>
+      <div className={`form-field__container ${containerClass}`}>
         <input
           type={type}
           id={id}
-          className={`form__input ${inputClass} ${hasErrors ? 'form__input_invalid' : ''}`}
+          className={`form-field__input ${inputClass} ${
+            hasErrors ? 'form-field__input_invalid' : ''
+          }`}
           name={inputname}
           value={value}
           placeholder={placeholder}
@@ -37,10 +39,14 @@ function Input({
           maxLength={maxLength}
         />
         <button
-          className={`button ${searchForm ? 'search-form__btn' : 'search-form__btn-invisible'}`}
+          className={`button ${
+            searchForm ? 'button_place_search-form' : 'button_place_search-form_invisible'
+          }`}
         ></button>
       </div>
-      <span className={`form__input-error  ${hasErrors ? 'form__input-error_active' : ''}`}>
+      <span
+        className={`form-field__input-error  ${hasErrors ? 'form-field__input-error_active' : ''}`}
+      >
         {errorMessage}
       </span>
     </label>

@@ -2,7 +2,7 @@ import FormPage from '../FormPage/FormPage';
 import Input from '../Input/Input';
 
 function Login() {
-  const containerClass = 'form__input-container_theme_grey';
+  const containerClass = 'form-field__container_theme_grey';
   return (
     <FormPage
       title="Рады видеть!"

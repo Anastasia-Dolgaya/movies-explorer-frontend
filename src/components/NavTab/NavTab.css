@@ -5,7 +5,7 @@
   padding: 150px 0 0;
 }
 
-.link__navtab {
+.navtab__link {
   min-width: 96px;
   color: white;
   background-color: #E8E8E8;
@@ -25,7 +25,7 @@
     padding: 212px 0 17px;
     gap: 6px;
   }
-  .link__navtab {
+  .navtab__link {
     min-width: 86px;
     padding: 5px 0;
     border-radius: 6px;

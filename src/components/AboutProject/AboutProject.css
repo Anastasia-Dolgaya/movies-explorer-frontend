@@ -100,6 +100,12 @@
   }
 }
 
+@media screen and (max-width: 630px) {
+  .about {
+    padding: 90px 30px;
+  }
+}
+
 @media screen and (max-width: 570px) {
   .about {
     padding: 70px 18px;

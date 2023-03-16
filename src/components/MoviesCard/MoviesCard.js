@@ -6,7 +6,7 @@ function MovieCard({ link, title, handleLikeClick, movieDuration, isLiked, locat
     location.pathname === '/saved-movies' ? 'card__btn_type_delete' : cardLikeButtonClassName
   }`;
   return (
-    <div className="card">
+    <li className="card">
       <div className="card__image-container">
         <img className="card__image" src={link} alt={title} />
       </div>
@@ -15,7 +15,7 @@ function MovieCard({ link, title, handleLikeClick, movieDuration, isLiked, locat
         <button type="button" className={cardButtonClassName} onClick={handleLikeClick}></button>
       </div>
       <span className="card__movie-duration">{movieDuration}</span>
-    </div>
+    </li>
   );
 }
 export default MovieCard;

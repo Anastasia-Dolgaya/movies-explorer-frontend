@@ -12,7 +12,7 @@ function MoviesCardList({ cards, location }) {
       location={location}
     />
   ));
-  return <section className="card-list">{renderCards}</section>;
+  return <ul className="card-list">{renderCards}</ul>;
 }
 
 export default MoviesCardList;

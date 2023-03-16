@@ -4,14 +4,14 @@ import Logo from '../Logo/Logo';
 import Navigation from '../Navigation/Navigation';
 function HeaderMovies({ location, isBurgerOpen, onOpen, onClose }) {
   return (
-    <div className="header">
+    <header className="header">
       <Logo />
       <Navigation location={location} />
-      <div className="account__wrap">
+      <div className="header__account-wrap">
         <Account />
       </div>
       <BurgerMenu isOpen={isBurgerOpen} onOpen={onOpen} onClose={onClose} />
-    </div>
+    </header>
   );
 }
 

@@ -10,7 +10,7 @@ function FormPage({ title, children, buttonContent, text, to, link }) {
         <form className="form">{children}</form>
       </div>
       <div className="form-page__wrapper">
-        <Button type="submit" btnClass="form__button" text={buttonContent} />
+        <Button type="submit" btnClass="form-page__button" text={buttonContent} />
         <div className="form-page__info">
           <span className="form-page__text">{text}</span>
           <Link className="link form-page__link" to={to}>

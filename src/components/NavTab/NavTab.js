@@ -1,13 +1,13 @@
 function NavTab() {
   return (
     <nav className="navtab">
-      <a className="link link__navtab" href="#about">
+      <a className="link navtab__link" href="#about">
         О проекте
       </a>
-      <a className="link link__navtab" href="#techs">
+      <a className="link navtab__link" href="#techs">
         Технологии
       </a>
-      <a className="link link__navtab" href="#about-me">
+      <a className="link navtab__link" href="#about-me">
         Студент
       </a>
     </nav>

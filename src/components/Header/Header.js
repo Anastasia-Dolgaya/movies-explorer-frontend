@@ -3,7 +3,7 @@ import Logo from '../Logo/Logo';
 
 function Header() {
   return (
-    <div className="header">
+    <header className="header">
       <Logo />
       <nav className="header__nav">
         <Link className="link link_theme_white" to="/signup">
@@ -13,7 +13,7 @@ function Header() {
           Войти
         </Link>
       </nav>
-    </div>
+    </header>
   );
 }
 
