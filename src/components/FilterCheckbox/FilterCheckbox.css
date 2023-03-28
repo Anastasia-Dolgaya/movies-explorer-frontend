@@ -16,6 +16,10 @@
   display:none;
 }
 
+.checkbox_disabled{
+  pointer-events: none;
+}
+
 .checkbox__slider {
   background-color: #A0A0A0;
   bottom: 0;

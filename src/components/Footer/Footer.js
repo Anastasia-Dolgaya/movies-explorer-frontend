@@ -1,4 +1,4 @@
-function Footer({ location }) {
+const Footer = ({ location }) => {
   return location.pathname === '/' ||
     location.pathname === '/movies' ||
     location.pathname === '/saved-movies' ? (
@@ -13,6 +13,6 @@ function Footer({ location }) {
       </div>
     </footer>
   ) : null;
-}
+};
 
 export default Footer;

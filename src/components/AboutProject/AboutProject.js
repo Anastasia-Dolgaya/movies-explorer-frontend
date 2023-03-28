@@ -1,4 +1,4 @@
-function AboutProject() {
+const AboutProject = () => {
   return (
     <article className="about" id="about">
       <h2 className="title">О проекте</h2>
@@ -26,5 +26,5 @@ function AboutProject() {
       </div>
     </article>
   );
-}
+};
 export default AboutProject;

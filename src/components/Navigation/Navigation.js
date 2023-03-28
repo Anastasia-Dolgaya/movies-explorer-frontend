@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-function Navigation({ location }) {
+const Navigation = ({ location }) => {
   return (
     <nav className="navigation">
       <Link
@@ -20,6 +20,6 @@ function Navigation({ location }) {
       </Link>
     </nav>
   );
-}
+};
 
 export default Navigation;

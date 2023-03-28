@@ -1,7 +1,7 @@
-function Input({
+const Input = ({
   type,
   id,
-  inputname,
+  inputName,
   value,
   placeholder,
   onChange,
@@ -16,7 +16,7 @@ function Input({
   searchForm,
   containerClass,
   inputClass,
-}) {
+}) => {
   return (
     <label className="form-field">
       {label}
@@ -27,7 +27,7 @@ function Input({
           className={`form-field__input ${inputClass} ${
             hasErrors ? 'form-field__input_invalid' : ''
           }`}
-          name={inputname}
+          name={inputName}
           value={value}
           placeholder={placeholder}
           required
@@ -38,11 +38,9 @@ function Input({
           minLength={minLength}
           maxLength={maxLength}
         />
-        <button
-          className={`button ${
-            searchForm ? 'button_place_search-form' : 'button_place_search-form_invisible'
-          }`}
-        ></button>
+        {searchForm ? (
+          <button className="button button_place_search-form" type="submit"></button>
+        ) : null}
       </div>
       <span
         className={`form-field__input-error  ${hasErrors ? 'form-field__input-error_active' : ''}`}
@@ -51,6 +49,6 @@ function Input({
       </span>
     </label>
   );
-}
+};
 
 export default Input;

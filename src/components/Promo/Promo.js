@@ -1,6 +1,6 @@
 import NavTab from '../NavTab/NavTab';
 
-function Promo() {
+const Promo = () => {
   return (
     <div className="promo">
       <h1 className="section-header section-header_place_promo">
@@ -9,6 +9,6 @@ function Promo() {
       <NavTab />
     </div>
   );
-}
+};
 
 export default Promo;

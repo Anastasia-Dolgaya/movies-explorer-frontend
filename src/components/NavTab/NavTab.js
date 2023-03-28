@@ -1,4 +1,4 @@
-function NavTab() {
+const NavTab = () => {
   return (
     <nav className="navtab">
       <a className="link navtab__link" href="#about">
@@ -12,5 +12,6 @@ function NavTab() {
       </a>
     </nav>
   );
-}
+};
+
 export default NavTab;
