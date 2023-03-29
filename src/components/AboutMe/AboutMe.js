@@ -1,6 +1,6 @@
 import Photo from '../../images/photo.jpg';
 
-function AboutMe() {
+const AboutMe = () => {
   return (
     <article className="about-me" id="about-me">
       <h2 className="title">Студент</h2>
@@ -29,6 +29,6 @@ function AboutMe() {
       </div>
     </article>
   );
-}
+};
 
 export default AboutMe;

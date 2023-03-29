@@ -1,4 +1,4 @@
-function Portfolio() {
+const Portfolio = () => {
   return (
     <div className="portfolio">
       <h2 className="portfolio__title">Портфолио</h2>
@@ -39,6 +39,6 @@ function Portfolio() {
       </ul>
     </div>
   );
-}
+};
 
 export default Portfolio;

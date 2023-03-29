@@ -1,4 +1,4 @@
-function Techs() {
+const Techs = () => {
   return (
     <div className="techs" id="techs">
       <h2 className="title">Технологии</h2>
@@ -17,6 +17,6 @@ function Techs() {
       </ul>
     </div>
   );
-}
+};
 
 export default Techs;

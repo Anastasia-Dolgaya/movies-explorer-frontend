@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-function Popup({ isOpen, onClose, text }) {
+const Popup = ({ isOpen, onClose, text }) => {
   useEffect(() => {
     document.addEventListener('keydown', handleEscClose);
     return () => {
@@ -28,5 +28,6 @@ function Popup({ isOpen, onClose, text }) {
       </div>
     </div>
   );
-}
+};
+
 export default Popup;

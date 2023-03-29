@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router-dom';
 
-function NotFound() {
+const NotFound = () => {
   let history = useHistory();
   const goBack = () => {
     history.goBack();
@@ -16,6 +16,6 @@ function NotFound() {
       </button>
     </div>
   );
-}
+};
 
 export default NotFound;

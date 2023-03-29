@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Account from '../Account/Account';
 
-function BurgerMenu({ isOpen, onOpen, onClose }) {
+const BurgerMenu = ({ isOpen, onOpen, onClose }) => {
   return (
     <nav className="burger">
       <button type="button" className="button burger__open-btn" onClick={onOpen}></button>
@@ -32,6 +32,6 @@ function BurgerMenu({ isOpen, onOpen, onClose }) {
       </div>
     </nav>
   );
-}
+};
 
 export default BurgerMenu;
