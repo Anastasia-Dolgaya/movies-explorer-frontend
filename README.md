@@ -5,4 +5,5 @@
 При работе над проектом использовалась методология БЭМ, технологии флекс и грид, визуальные эффекты. Реализована адаптивная верстка с медиазапросами.
 
 Ссылка на макет: https://disk.yandex.ru/d/GzdO_MUKb1cvYw
-Сслка на сайт: https://leela.diploma.nomoredomains.club
+Ссылка на сайт: https://leela.diploma.nomoredomains.club
+Ссылка на пулреквест: https://github.com/Anastasia-Dolgaya/movies-explorer-frontend/pull/2#issue-1646165504
