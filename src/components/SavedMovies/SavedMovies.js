@@ -7,7 +7,7 @@ import {
   getLocalStorageItem,
   saveLocalStorageItem,
   updateMovieInLocalStorage,
-} from '../../utils/local-storage-helpers';
+} from '../../utils/localStorageHelpers';
 
 import { lastSavedMoviesSearchParamKey } from '../../utils/constants';
 import useWindowWidth from '../../hooks/useWindowWidth';

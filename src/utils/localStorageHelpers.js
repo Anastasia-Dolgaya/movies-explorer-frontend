@@ -1,4 +1,4 @@
-import { updateItem } from './array-helpers';
+import { updateItem } from './arrayHelpers';
 
 export const getLocalStorageItem = (key) => {
   try {

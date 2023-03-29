@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
-import { getErrorMessage } from '../../utils/error-helpers';
+import { getErrorMessage } from '../../utils/errorHelpers';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -13,7 +13,7 @@ import Profile from '../Profile/Profile';
 import NotFound from '../NotFound/NotFound';
 import Popup from '../Popup/Popup';
 import * as auth from '../../utils/auth';
-import { saveMoviesToLocalStorage } from '../../utils/local-storage-helpers';
+import { saveMoviesToLocalStorage } from '../../utils/localStorageHelpers';
 import { mainApi } from '../../utils/MainApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
@@ -25,8 +25,6 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [registrationError, setRegistrationError] = useState('');
   const [loginError, setLoginError] = useState('');
-  const [updateError, setUpdateError] = useState('');
-  const [userUpdated, setUserUpdated] = useState(false);
   const [isUserLoading, setUserLoading] = useState(true);
   const history = useHistory();
 
@@ -113,16 +111,9 @@ const App = () => {
   };
 
   const handleUserUpdate = (data) => {
-    mainApi
-      .updateUserData(data)
-      .then((res) => {
-        setCurrentUser(res);
-        setUserUpdated(true);
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-        setUpdateError(getErrorMessage(err));
-      });
+    return mainApi.updateUserData(data).then((res) => {
+      setCurrentUser(res);
+    });
   };
 
   return (
@@ -145,15 +136,19 @@ const App = () => {
           <Route exact path="/">
             <Main />
           </Route>
-          <Route path="/signup">
-            <Register
-              onRegistration={handleRegistration}
-              registrationError={registrationError || loginError}
-            />
-          </Route>
-          <Route path="/signin">
-            <Login onLogin={handleLogin} loginError={loginError} />
-          </Route>
+          {!loggedIn && (
+            <Route path="/signup">
+              <Register
+                onRegistration={handleRegistration}
+                registrationError={registrationError || loginError}
+              />
+            </Route>
+          )}
+          {!loggedIn && (
+            <Route path="/signin">
+              <Login onLogin={handleLogin} loginError={loginError} />
+            </Route>
+          )}
           {!isUserLoading && (
             <ProtectedRoute
               path="/movies"
@@ -177,8 +172,6 @@ const App = () => {
               component={Profile}
               onSignout={signOut}
               onProfileUpdate={handleUserUpdate}
-              userUpdated={userUpdated}
-              error={updateError}
             />
           )}
           {!isUserLoading && (

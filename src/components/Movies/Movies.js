@@ -6,7 +6,7 @@ import {
   getMoviesFromLocalStorage,
   removeMovieFromLocalStorage,
   saveLocalStorageItem,
-} from '../../utils/local-storage-helpers';
+} from '../../utils/localStorageHelpers';
 import useWindowWidth from '../../hooks/useWindowWidth';
 import { getPageParams } from '../../utils/utils';
 import { lastSearchParamsKey } from '../../utils/constants';

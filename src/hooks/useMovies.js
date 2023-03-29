@@ -1,9 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { updateItem } from '../utils/array-helpers';
-import {
-  getMoviesFromLocalStorage,
-  saveMoviesToLocalStorage,
-} from '../utils/local-storage-helpers';
+import { updateItem } from '../utils/arrayHelpers';
+import { getMoviesFromLocalStorage, saveMoviesToLocalStorage } from '../utils/localStorageHelpers';
 import { fetchError } from '../utils/constants';
 
 export const filterBySearchString = (response, queryString, isShort) =>
