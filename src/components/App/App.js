@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import { getErrorMessage } from '../../utils/errorHelpers';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
@@ -16,6 +16,14 @@ import * as auth from '../../utils/auth';
 import { saveMoviesToLocalStorage } from '../../utils/localStorageHelpers';
 import { mainApi } from '../../utils/MainApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import { prepareMovies } from '../SavedMovies/SavedMovies';
+
+const fetchSavedMovies = () => {
+  return mainApi.fetchMovies().then((movies) => {
+    const savedMovies = prepareMovies(movies);
+    saveMoviesToLocalStorage('SavedMoviesPage', savedMovies);
+  });
+};
 
 const App = () => {
   const location = useLocation();
@@ -26,112 +34,117 @@ const App = () => {
   const [registrationError, setRegistrationError] = useState('');
   const [loginError, setLoginError] = useState('');
   const [isUserLoading, setUserLoading] = useState(true);
-  const history = useHistory();
+  const { push: pushHistory } = useHistory();
 
   useEffect(() => {
     handleLoginCheck();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (loggedIn) {
-      mainApi
-        .fetchUserData()
-        .then((res) => {
-          setCurrentUser({ ...currentUser, ...res });
-          return mainApi.fetchMovies().then((savedMovies) => {
-            saveMoviesToLocalStorage('SavedMoviesPage', savedMovies);
-          });
-        })
-        .catch((err) => console.log(`Ошибка: ${err}`))
-        .finally(() => {
-          setUserLoading(false);
-        });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loggedIn]);
-
   const closePopup = () => {
     setPopupOpen(false);
   };
 
-  const openBurgerMenu = () => {
-    setBurgerOpen(true);
-  };
+  const toggleBurgerMenu = useCallback(() => {
+    setBurgerOpen(!isBurgerOpen);
+  }, [isBurgerOpen]);
 
-  const closeBurgerMenu = () => {
-    setBurgerOpen(false);
-  };
+  const handleLogin = useCallback(
+    (email, password) => {
+      return auth
+        .authorize(email, password)
+        .then(() => {
+          setLoggedIn(true);
+          setUserLoading(true);
 
-  const handleRegistration = (name, email, password) => {
-    return auth
-      .register(name, email, password)
-      .then(() => {
-        return handleLogin(email, password);
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-        setRegistrationError(getErrorMessage(err));
-      });
-  };
+          return mainApi
+            .fetchUserData()
+            .then((res) => {
+              setCurrentUser(res);
+              pushHistory('/movies');
+              return fetchSavedMovies();
+            })
+            .finally(() => {
+              setUserLoading(false);
+            });
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+          setLoginError(getErrorMessage(err));
+        });
+    },
+    [pushHistory],
+  );
 
-  const handleLogin = (email, password) => {
-    return auth
-      .authorize(email, password)
-      .then(() => {
-        setLoggedIn(true);
-        history.push('/movies');
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-        setLoginError(getErrorMessage(err));
-      });
-  };
+  const handleRegistration = useCallback(
+    (name, email, password) => {
+      return auth
+        .register(name, email, password)
+        .then(() => {
+          return handleLogin(email, password);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+          setRegistrationError(getErrorMessage(err));
+        });
+    },
+    [handleLogin],
+  );
 
-  const handleLoginCheck = () => {
+  const handleLoginCheck = useCallback(() => {
     setUserLoading(true);
-    mainApi.fetchUserData().then((res) => {
-      if (res._id) {
-        setLoggedIn(true);
-      } else {
-        history.push('/');
-      }
-    });
-  };
+    mainApi
+      .fetchUserData()
+      .then((res) => {
+        if (res._id) {
+          setCurrentUser(res);
+          setLoggedIn(true);
+          return fetchSavedMovies();
+        } else {
+          pushHistory('/');
+        }
+      })
+      .finally(() => {
+        setUserLoading(false);
+      });
+  }, [pushHistory]);
 
-  const signOut = () => {
+  const signOut = useCallback(() => {
     return mainApi
       .signout()
       .then(() => {
         localStorage.clear();
         setLoggedIn(false);
-        history.push('/');
+        pushHistory('/');
       })
       .catch((err) => console.log(`Ошибка: ${err}`));
-  };
+  }, [pushHistory]);
 
-  const handleUserUpdate = (data) => {
+  const handleUserUpdate = useCallback((data) => {
     return mainApi.updateUserData(data).then((res) => {
       setCurrentUser(res);
     });
-  };
+  }, []);
+
+  if (isUserLoading) {
+    return <div className="app"></div>;
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
-        {!isUserLoading &&
-          (location.pathname === '/' ||
-          location.pathname === '/movies' ||
-          location.pathname === '/saved-movies' ||
-          location.pathname === '/profile' ? (
-            <Header
-              loggedIn={loggedIn}
-              location={location}
-              isBurgerOpen={isBurgerOpen}
-              onOpen={openBurgerMenu}
-              onClose={closeBurgerMenu}
-            />
-          ) : null)}
+        {location.pathname === '/' ||
+        location.pathname === '/movies' ||
+        location.pathname === '/saved-movies' ||
+        location.pathname === '/profile' ? (
+          <Header
+            loggedIn={loggedIn}
+            location={location}
+            isBurgerOpen={isBurgerOpen}
+            onOpen={toggleBurgerMenu}
+            onClose={toggleBurgerMenu}
+          />
+        ) : null}
         <Switch>
           <Route exact path="/">
             <Main />
@@ -149,36 +162,32 @@ const App = () => {
               <Login onLogin={handleLogin} loginError={loginError} />
             </Route>
           )}
-          {!isUserLoading && (
-            <ProtectedRoute
-              path="/movies"
-              loggedIn={loggedIn}
-              component={Movies}
-              location={location}
-            />
-          )}
-          {!isUserLoading && (
-            <ProtectedRoute
-              path="/saved-movies"
-              loggedIn={loggedIn}
-              component={SavedMovies}
-              location={location}
-            />
-          )}
-          {!isUserLoading && (
-            <ProtectedRoute
-              path="/profile"
-              loggedIn={loggedIn}
-              component={Profile}
-              onSignout={signOut}
-              onProfileUpdate={handleUserUpdate}
-            />
-          )}
-          {!isUserLoading && (
-            <Route path="*">
-              <NotFound />
-            </Route>
-          )}
+
+          <ProtectedRoute
+            path="/movies"
+            loggedIn={loggedIn}
+            component={Movies}
+            location={location}
+          />
+
+          <ProtectedRoute
+            path="/saved-movies"
+            loggedIn={loggedIn}
+            component={SavedMovies}
+            location={location}
+          />
+
+          <ProtectedRoute
+            path="/profile"
+            loggedIn={loggedIn}
+            component={Profile}
+            onSignout={signOut}
+            onProfileUpdate={handleUserUpdate}
+          />
+
+          <Route path="*">
+            <NotFound />
+          </Route>
         </Switch>
         <Footer location={location} />
 

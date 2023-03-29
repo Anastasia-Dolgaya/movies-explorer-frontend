@@ -13,7 +13,7 @@ import { lastSavedMoviesSearchParamKey } from '../../utils/constants';
 import useWindowWidth from '../../hooks/useWindowWidth';
 import { getPageParams } from '../../utils/utils';
 
-const prepareMovies = (movies) => {
+export const prepareMovies = (movies) => {
   return movies.map((movie) => ({ ...movie, favorited: true }));
 };
 

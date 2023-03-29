@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { updateItem } from '../utils/arrayHelpers';
-import { getMoviesFromLocalStorage, saveMoviesToLocalStorage } from '../utils/localStorageHelpers';
+import {
+  getMoviesFromLocalStorage,
+  removeMovieFromLocalStorage,
+  saveMoviesToLocalStorage,
+  updateMovieInLocalStorage,
+} from '../utils/localStorageHelpers';
 import { fetchError } from '../utils/constants';
 
 export const filterBySearchString = (response, queryString, isShort) =>
@@ -45,18 +50,18 @@ const useMovies = (
     (id, data) => {
       const updatedMovies = updateItem(movies, id, data);
 
-      saveMoviesToLocalStorage(pageName, updatedMovies);
+      updateMovieInLocalStorage(pageName, id, data, idKey);
 
       setMovies(updatedMovies.slice(0, offset));
     },
-    [offset, pageName, movies],
+    [idKey, offset, pageName, movies],
   );
 
   const removeMovieLocal = useCallback(
     (id) => {
       const moviesWithoutRemoved = movies.filter((movie) => movie[idKey] !== id);
 
-      saveMoviesToLocalStorage(pageName, moviesWithoutRemoved);
+      removeMovieFromLocalStorage(pageName, id, idKey);
 
       setMovies(moviesWithoutRemoved.slice(0, offset));
     },
