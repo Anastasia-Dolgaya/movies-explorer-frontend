@@ -1,5 +1,4 @@
-//const BASE_URL = 'https://api.leela.diploma.nomoredomains.club';
-const BASE_URL = 'http://localhost:3002';
+const BASE_URL = 'https://api.leela.diploma.nomoredomains.club';
 
 const mainApiConfig = {
   url: BASE_URL,
